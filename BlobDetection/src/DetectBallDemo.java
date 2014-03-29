@@ -53,7 +53,7 @@ public class DetectBallDemo {
 	//	    panel4.setimagewithMat(image4);
 	//	    frame4.repaint();
 		}
-	    //Successful push from laptop!
+	    //Successful update from desktop!
 		capture.release();
 	    System.out.println("Success");
 	}
