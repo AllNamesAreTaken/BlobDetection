@@ -37,8 +37,8 @@ public class DetectBallDemo {
 		S: 0 - 255
 		V: 0 - 255
 		*/
-		Scalar hsv_min = new Scalar(170, 50, 200, 0);
-		Scalar hsv_max = new Scalar(190, 255, 255, 0);
+		Scalar hsv_min = new Scalar(0, 100, 100, 0);
+		Scalar hsv_max = new Scalar(15, 255, 255, 0);
 		while(capture.isOpened()) {
 			capture.read(image);
 			Imgproc.cvtColor(image, image2, Imgproc.COLOR_BGR2HSV);
