@@ -4,10 +4,10 @@ import javax.swing.JFrame;
 public class Frame extends JFrame{
 	public static int x = 0;
 	public static int y = 0;
-	public Frame (Panel panel, String name) {
+	public Frame (Panel panel, String name, int sizex, int sizey) {
 		super(name);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(400, 400);  
+		setSize(sizex, sizey - 100);  
 		setBounds(0, 0, getWidth(), getHeight());  
 		setContentPane(panel);  
 	    setVisible(true);
