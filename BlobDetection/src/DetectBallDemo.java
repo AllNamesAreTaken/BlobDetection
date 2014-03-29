@@ -47,6 +47,8 @@ public class DetectBallDemo {
 	    frame3.repaint();
 //	    panel4.setimagewithMat(image4);
 //	    frame4.repaint();
+	    
+	    System.out.println("Success");
 	}
 
 }
