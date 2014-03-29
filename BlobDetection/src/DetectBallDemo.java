@@ -7,8 +7,8 @@ import org.opencv.imgproc.Imgproc;
 
 
 public class DetectBallDemo {
-	public int sizex = 800;
-	public int sizey = 800;
+	public int sizex = 700;
+	public int sizey = 700;
 
 	public void run() {  
 		Panel panel1 = new Panel();
@@ -21,7 +21,7 @@ public class DetectBallDemo {
 		Panel panel3 = new Panel();
 		Frame frame3 = new Frame(panel3, "Picture", sizex, sizey);
 
-		VideoCapture capture = new VideoCapture(1);
+		VideoCapture capture = new VideoCapture(0);
 		capture.set(3, sizex - 100);
 		capture.set(4, sizey - 100);
 	    
@@ -30,11 +30,15 @@ public class DetectBallDemo {
 		Mat image3 = new Mat();
 
 		int tn = 10;
-		// H: 0 - 180
-		// S: 0 - 255
-		// V: 0 - 255
-		Scalar hsv_min = new Scalar(tn - 10, 50, 200, 0);
-		Scalar hsv_max = new Scalar(tn, 255, 255, 0);
+		/*
+		H: 0 - 180
+			Hue is color in degrees
+			Starts at red and cycles through all colors until it returns to red (180 and 0)
+		S: 0 - 255
+		V: 0 - 255
+		*/
+		Scalar hsv_min = new Scalar(170, 50, 200, 0);
+		Scalar hsv_max = new Scalar(190, 255, 255, 0);
 		while(capture.isOpened()) {
 			capture.read(image);
 			Imgproc.cvtColor(image, image2, Imgproc.COLOR_BGR2HSV);
