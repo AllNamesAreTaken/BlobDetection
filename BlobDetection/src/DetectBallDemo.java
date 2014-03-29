@@ -20,9 +20,7 @@ public class DetectBallDemo {
 	    
 		Panel panel3 = new Panel();
 		Frame frame3 = new Frame(panel3, "Picture", sizex, sizey);
-		
-//		Panel panel4 = new Panel();
-//		Frame frame4 = new Frame(panel4, "Picture");
+
 		VideoCapture capture = new VideoCapture(1);
 		capture.set(3, sizex - 100);
 		capture.set(4, sizey - 100);
@@ -30,7 +28,7 @@ public class DetectBallDemo {
 		Mat image = Highgui.imread("res/rb.png");
 		Mat image2 = new Mat();
 		Mat image3 = new Mat();
-//		Mat image4 = Highgui.imread("res/TestPic.png");
+
 		int tn = 10;
 		// H: 0 - 180
 		// S: 0 - 255
@@ -39,7 +37,6 @@ public class DetectBallDemo {
 		Scalar hsv_max = new Scalar(tn, 255, 255, 0);
 		while(capture.isOpened()) {
 			capture.read(image);
-	//		Imgproc.cvtColor(image4, image4, Imgproc.COLOR_BGR2HSV);
 			Imgproc.cvtColor(image, image2, Imgproc.COLOR_BGR2HSV);
 			
 			Core.inRange(image2, hsv_min, hsv_max, image3);
@@ -50,8 +47,6 @@ public class DetectBallDemo {
 		    frame2.repaint();
 		    panel3.setimagewithMat(image3);
 		    frame3.repaint();
-	//	    panel4.setimagewithMat(image4);
-	//	    frame4.repaint();
 		}
 	    //Successful update from desktop!
 		capture.release();
