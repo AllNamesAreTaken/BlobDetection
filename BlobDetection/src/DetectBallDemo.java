@@ -41,7 +41,7 @@ public class DetectBallDemo {
 		S: 0 - 255
 		V: 0 - 255
 		*/
-		Scalar hsv_min = new Scalar(0, 100, 100, 0);
+		Scalar hsv_min = new Scalar(5, 50, 50, 0);
 		Scalar hsv_max = new Scalar(15, 255, 255, 0);
 		while(capture.isOpened()) {
 			capture.read(image);
