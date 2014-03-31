@@ -1,5 +1,9 @@
+import java.util.ArrayList;
+import java.util.List;
+
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
 import org.opencv.core.Scalar;
 import org.opencv.highgui.Highgui;
 import org.opencv.highgui.VideoCapture;
@@ -44,6 +48,11 @@ public class DetectBallDemo {
 			Imgproc.cvtColor(image, image2, Imgproc.COLOR_BGR2HSV);
 			
 			Core.inRange(image2, hsv_min, hsv_max, image3);
+			
+			List<MatOfPoint> contours = new ArrayList<>();
+
+	        Imgproc.findContours(image3, contours, new Mat(), Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
+	        Imgproc.drawContours(image, contours, -1, new Scalar(255,255,0));
 		    
 		    panel1.setimagewithMat(image);
 		    frame1.repaint();
