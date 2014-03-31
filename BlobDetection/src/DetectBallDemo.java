@@ -53,7 +53,7 @@ public class DetectBallDemo {
 
 	        Imgproc.findContours(image3, contours, new Mat(), Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
 	        Imgproc.drawContours(image, contours, -1, new Scalar(255,255,0));
-		    
+	        
 		    panel1.setimagewithMat(image);
 		    frame1.repaint();
 		    panel2.setimagewithMat(image2);
