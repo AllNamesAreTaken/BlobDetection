@@ -29,7 +29,7 @@ public class DetectBallDemo {
 		Panel panel4 = new Panel();
 		Frame frame4 = new Frame(panel4, "Picture", sizex, sizey);
 
-		VideoCapture capture = new VideoCapture(0);
+		VideoCapture capture = new VideoCapture(1);
 		capture.set(3, sizex - 100);
 		capture.set(4, sizey - 100);
 	    
@@ -46,7 +46,7 @@ public class DetectBallDemo {
 		S: 0 - 255
 		V: 0 - 255
 		*/
-		Scalar hsv_min = new Scalar(0, 100, 100, 0);
+		Scalar hsv_min = new Scalar(0, 60, 60, 0);
 		Scalar hsv_max = new Scalar(10, 255, 255, 0);
 
         Mat erode = Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(3,3));
@@ -54,6 +54,10 @@ public class DetectBallDemo {
 		while(Frame.isOpen) {
 			
 			capture.read(image);
+//			Imgproc.pyrDown(image, image);
+			Imgproc.dilate(image, image, new Mat());
+			Imgproc.dilate(image, image, new Mat());
+//			Imgproc.GaussianBlur(src, dst, ksize, sigmaX);
 			Imgproc.cvtColor(image, image2, Imgproc.COLOR_BGR2HSV);
 
 			Core.inRange(image2, hsv_min, hsv_max, image3);
