@@ -46,12 +46,13 @@ public class DetectBallDemo {
 		S: 0 - 255
 		V: 0 - 255
 		*/
-		Scalar hsv_min = new Scalar(0, 50, 50, 0);
+		Scalar hsv_min = new Scalar(0, 100, 100, 0);
 		Scalar hsv_max = new Scalar(10, 255, 255, 0);
 
         Mat erode = Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(3,3));
         Mat dilate = Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(5,5));
-		while(capture.isOpened()) {
+		while(Frame.isOpen) {
+			
 			capture.read(image);
 			Imgproc.cvtColor(image, image2, Imgproc.COLOR_BGR2HSV);
 
@@ -81,6 +82,7 @@ public class DetectBallDemo {
 	    //Successful update from desktop!
 		capture.release();
 	    System.out.println("Success");
+	    System.exit(0);
 	}
 
 }
