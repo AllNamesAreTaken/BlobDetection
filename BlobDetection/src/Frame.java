@@ -12,14 +12,14 @@ public class Frame extends JFrame{
 	public static Button close;
 	public Frame (Panel panel, String name, int sizex, int sizey) {
 		super(name);
-		setSize(sizex, sizey - 100);  
+		setSize(sizex-400, sizey - 300);  
 		setBounds(0, 0, getWidth(), getHeight());  
 		setContentPane(panel);
 		close = new Button("Close");
 		add(close);
 	    setVisible(true);
 	    setLocation(x, y);
-	    x += 400;
+	    x += 240;
 	}
 	
 	public class Button extends JButton {
@@ -29,6 +29,7 @@ public class Frame extends JFrame{
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					isOpen = false;
+					System.exit(0);
 				}
 	        });
 		}

@@ -1,0 +1,6 @@
+Note:
+getStructuringElement(int shape, Size ksize) 
+Returns a structuring element of the specified size and shape for morphological operations.
+
+HoughCircles(Mat image, Mat circles, int method, double dp, double minDist) 
+Finds circles in a grayscale image using the Hough transform.
