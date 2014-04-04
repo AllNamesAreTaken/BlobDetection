@@ -98,7 +98,8 @@ public class DetectBallDemo {
 			bi[0] = circles.get(0, 0)[0];
 			bi[1] = circles.get(0, 0)[1];
 			bi[2] = circles.get(0, 0)[2];
-			image4 = new Mat(image, new Rect((int)(bi[0]-bi[2]), (int)(bi[1]-bi[2]), (int)bi[2] * 2, (int)bi[2] * 2));
+			int pad = 10;
+			image4 = new Mat(image, new Rect((int)(bi[0]-bi[2]-pad), (int)(bi[1]-bi[2]-pad), (int)((bi[2]+pad) * 2), (int)((bi[2]+pad) * 2)));
 		}
 		for(int i = 0; i < circles.cols(); i++) {
 			double vCircle[] = circles.get(0, i);
