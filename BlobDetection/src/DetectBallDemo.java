@@ -62,9 +62,8 @@ public class DetectBallDemo {
 
 		
 //		Imgproc.pyrDown(image, image);
-		Imgproc.dilate(image, image, new Mat());
-		Imgproc.dilate(image, image, new Mat());
-//		Imgproc.GaussianBlur(src, dst, ksize, sigmaX);
+		//This may be important later for camera detection
+		Imgproc.GaussianBlur(image, image, new Size(3,3), 2.0);
 		Imgproc.cvtColor(image, image2, Imgproc.COLOR_BGR2HSV);
 
 		Core.inRange(image2, hsv_min, hsv_max, image3);
