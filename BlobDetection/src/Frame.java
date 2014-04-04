@@ -19,7 +19,8 @@ public class Frame extends JFrame{
 		add(close);
 	    setVisible(true);
 	    setLocation(x, y);
-	    x += 240;
+	    x += 400;
+	    y += 100;
 	}
 	
 	public class Button extends JButton {
