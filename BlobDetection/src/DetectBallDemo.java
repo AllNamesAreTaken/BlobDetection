@@ -88,11 +88,12 @@ public class DetectBallDemo {
         	//Method of detection (I assume Hough is the technique and Gradient is the mat type)
         	//Resolution decay? (if x is parameter, new_res = cur_res/x)
         	//Distance from other circles (if spot is closer than this, ignore somehow)
+        		//Since only one ball is detected, large number can go here
     		//Something to do with canny edge detection, not sure
         	//Also something to do with canny, smaller numbers find more circles
-        	//Minimum Radius of circle
-        	//Maximum Radius of circle
-		Imgproc.HoughCircles(image3, circles, Imgproc.CV_HOUGH_GRADIENT, 2, 200, 50, 10, 20, 100);
+        	//Minimum Radius of circle (20)
+        	//Maximum Radius of circle (100)
+		Imgproc.HoughCircles(image3, circles, Imgproc.CV_HOUGH_GRADIENT, 2, 500, 50, 10, 20, 100);
 		if(circles.cols() > 0) 
 		{
 			bi[0] = circles.get(0, 0)[0];
@@ -105,7 +106,9 @@ public class DetectBallDemo {
 			int rh = (int)((bi[2]+pad) * 2);
 			
 			if(rx < 0) rx = 0;
+			else if(rx > image3.width()) rx = image3.width();
 			if(ry < 0) ry = 0;
+			else if(ry > image3.height()) ry = image3.height();
 			if((rw + rx) > image3.width()) rw = image3.width() - rx;
 			if((rh + ry) > image3.width()) rh = image3.width() - ry;
 			
