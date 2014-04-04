@@ -12,7 +12,7 @@ public class Frame extends JFrame{
 	public static Button close;
 	public Frame (Panel panel, String name, int sizex, int sizey) {
 		super(name);
-		setSize(sizex-400, sizey - 300);  
+		setSize(sizex+50, sizey+50);  
 		setBounds(0, 0, getWidth(), getHeight());  
 		setContentPane(panel);
 		close = new Button("Close");

@@ -19,18 +19,6 @@ public class DetectBallDemo {
 	public static double[] bi = new double[3];
 
 	public void run() {  
-		Panel panel1 = new Panel();
-		Frame frame1 = new Frame(panel1, "Picture", sizex, sizey);
-	    
-
-		Panel panel2 = new Panel();
-		Frame frame2 = new Frame(panel2, "Picture", sizex, sizey);
-	    
-		Panel panel3 = new Panel();
-		Frame frame3 = new Frame(panel3, "Picture", sizex, sizey);
-		
-		Panel panel4 = new Panel();
-		Frame frame4 = new Frame(panel4, "Picture", sizex, sizey);
 
 //		Panel panel5 = new Panel();
 //		Frame frame5 = new Frame(panel5, "Picture", sizex, sizey);
@@ -44,6 +32,19 @@ public class DetectBallDemo {
 		Mat image3 = new Mat();
 		Mat image4 = new Mat();
 //		Mat image5 = new Mat();
+
+		Panel panel1 = new Panel();
+		Frame frame1 = new Frame(panel1, "Image", image.width(), image.height());
+	    
+
+		Panel panel2 = new Panel();
+		Frame frame2 = new Frame(panel2, "HSV", image.width(), image.height());
+	    
+		Panel panel3 = new Panel();
+		Frame frame3 = new Frame(panel3, "Grayscale", image.width(), image.height());
+		
+		Panel panel4 = new Panel();
+		Frame frame4 = new Frame(panel4, "CroppedBall", image.width(), image.height());
 
 		int tn = 10;
 		/*
@@ -98,7 +99,18 @@ public class DetectBallDemo {
 			bi[1] = circles.get(0, 0)[1];
 			bi[2] = circles.get(0, 0)[2];
 			int pad = 10;
-			image4 = new Mat(image, new Rect((int)(bi[0]-bi[2]-pad), (int)(bi[1]-bi[2]-pad), (int)((bi[2]+pad) * 2), (int)((bi[2]+pad) * 2)));
+			int rx = (int)(bi[0]-bi[2]-pad);
+			int ry = (int)(bi[1]-bi[2]-pad);
+			int rw = (int)((bi[2]+pad) * 2);
+			int rh = (int)((bi[2]+pad) * 2);
+			
+			if(rx < 0) rx = 0;
+			if(ry < 0) ry = 0;
+			if((rw + rx) > image3.width()) rw = image3.width() - rx;
+			if((rh + ry) > image3.width()) rh = image3.width() - ry;
+			
+			Rect rec = new Rect(rx, ry, rw, rh);
+			image4 = new Mat(image, rec);
 		}
 		for(int i = 0; i < circles.cols(); i++) {
 			double vCircle[] = circles.get(0, i);
