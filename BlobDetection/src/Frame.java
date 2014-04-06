@@ -31,7 +31,8 @@ public class Frame extends JFrame{
 	public static int aColorW = 10;
 	public static JLabel aColorDis;
 	public static JLabel aColorDisW;
-	public static JLabel ballPos;
+	public static JLabel ballPosx;
+	public static JLabel ballPosy;
 	public Frame (Panel panel, String name, int sizex, int sizey) {
 		super(name);
 		addWindowListener(new java.awt.event.WindowAdapter() {
@@ -41,8 +42,6 @@ public class Frame extends JFrame{
 		    }
 		});
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(sizex+50, sizey+50);  
-		setBounds(0, 0, getWidth(), getHeight());  
 		setContentPane(panel);
 		nOfFrames++;
 		
@@ -68,15 +67,21 @@ public class Frame extends JFrame{
 			buttonContainer.add(add2bw);
 			aColorDisW = new JLabel("Color End: " + aColorW);
 			buttonContainer.add(aColorDisW);
-			ballPos = new JLabel("x=" + DetectBallDemo.bi[0] + " y=" + DetectBallDemo.bi[1]);
+			ballPosx = new JLabel("x=" + DetectBallDemo.bi[0]);
+			ballPosy = new JLabel("y=" + DetectBallDemo.bi[1]);
+			buttonContainer.add(ballPosx);
+			buttonContainer.add(ballPosy);
 			buttonContainer.add(new JPanel());
 			buttonContainer.add(new JPanel());
-			buttonContainer.add(new JPanel());
-			buttonContainer.add(ballPos);
 			setLayout(new BorderLayout());
 			add(buttonContainer, BorderLayout.SOUTH);
+
+			setSize(400, 300);
 		}
-		
+		else{
+			setSize(sizex+50, sizey+50);
+		}  
+		setBounds(0, 0, getWidth(), getHeight());  
 				
 	    setVisible(true);
 	    setLocation(x, y);

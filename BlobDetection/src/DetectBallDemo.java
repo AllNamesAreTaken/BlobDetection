@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JLabel;
+
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -128,7 +130,9 @@ public class DetectBallDemo {
 				bi[2] = -1.0;
 				redCropImg = new Mat();
 			}
-			Frame.ballPos.setText("x=" + DetectBallDemo.bi[0] + " y=" + DetectBallDemo.bi[1]);
+
+			Frame.ballPosx.setText("x=" + DetectBallDemo.bi[0]);
+			Frame.ballPosy.setText("y=" + DetectBallDemo.bi[1]);
 			for(int i = 0; i < circles.cols(); i++) {
 				double vCircle[] = circles.get(0, i);
 				int rCircle = (int)Math.round(vCircle[2]);
