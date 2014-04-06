@@ -19,11 +19,7 @@ public class DetectBallDemo {
 	public static double[] bi = new double[3];
 
 	public void run() {  
-
-//		Panel panel5 = new Panel();
-//		Frame frame5 = new Frame(panel5, "Picture", sizex, sizey);
-
-		VideoCapture capture = new VideoCapture(1);
+		VideoCapture capture = new VideoCapture(0);
 		capture.set(3, sizex - 100);
 		capture.set(4, sizey - 100);
 	    
@@ -31,7 +27,6 @@ public class DetectBallDemo {
 		Mat image2 = new Mat();
 		Mat image3 = new Mat();
 		Mat image4 = new Mat();
-//		Mat image5 = new Mat();
 
 		Panel panel1 = new Panel();
 		Frame frame1 = new Frame(panel1, "Image", image.width(), image.height());
@@ -59,11 +54,12 @@ public class DetectBallDemo {
         Mat erode = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3,3));
         Mat dilate = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(5,5));
         
+		capture.read(image);
+		int cameraWidth = image.width();
+		int cameraHeight = image.height();
         
 		while(Frame.isOpen) {	
 			capture.read(image);
-//			Imgproc.pyrDown(image, image);
-			//This may be important later for camera detection
 			Imgproc.GaussianBlur(image, image, new Size(19,19), 300.0);
 			Imgproc.cvtColor(image, image2, Imgproc.COLOR_BGR2HSV);
 
@@ -73,14 +69,7 @@ public class DetectBallDemo {
 			
 			Imgproc.dilate(erode, erode, dilate);
 			Imgproc.dilate(erode, erode, dilate);
-		
-//			List<MatOfPoint> contours = new ArrayList<>();
-	//
-//	        Imgproc.findContours(image3, contours, new Mat(), Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
-//	        Imgproc.drawContours(image3, contours, -1, new Scalar(255,255,0));
-
-	        //Image5 contains a column with circle info, not an identified image apperantly
-	        Mat circles = new Mat();
+			
 	        //HoughCircles:
 	        	//Image as Mat
 	        	//One long row of data as Mat (Stores x, y, and radius of each circle)
@@ -93,31 +82,49 @@ public class DetectBallDemo {
 	        	//Also something to do with canny, smaller numbers find more circles
 	        	//Minimum Radius of circle (20)
 	        	//Maximum Radius of circle (100)
+	        Mat circles = new Mat();
 			Imgproc.HoughCircles(image3, circles, Imgproc.CV_HOUGH_GRADIENT, 2, 500, 10, 10, 20, 100);
-//			if(circles.cols() > 0) 
-//			{
-//				bi[0] = circles.get(0, 0)[0];
-//				bi[1] = circles.get(0, 0)[1];
-//				bi[2] = circles.get(0, 0)[2];
-//				int pad = 10;
-//				int rx = (int)(bi[0]-bi[2]-pad);
-//				int ry = (int)(bi[1]-bi[2]-pad);
-//				int rw = (int)((bi[2]+pad) * 2);
-//				int rh = (int)((bi[2]+pad) * 2);
-//				
-//				if(rx < 0) rx = 0;
-//				else if(rx > image3.width()) rx = image3.width();
-//				if(ry < 0) ry = 0;
-//				else if(ry > image3.height()) ry = image3.height();
-//				if((rw + rx) > image3.width()) rw = image3.width() - rx;
-//				if((rh + ry) > image3.width()) rh = image3.width() - ry;
-//				
-//				Rect rec = new Rect(rx, ry, rw, rh);
-//				image4 = new Mat(image, rec);
-//			}
-//			else {
-//				image4 = new Mat();
-//			}
+			if(circles.cols() > 0) 
+			{
+				bi[0] = circles.get(0, 0)[0];
+				bi[1] = circles.get(0, 0)[1];
+				bi[2] = circles.get(0, 0)[2];
+				int pad = 10;
+				int rx = (int)(bi[0]-bi[2]-pad);
+				int ry = (int)(bi[1]-bi[2]-pad);
+				int rw = (int)((bi[2]+pad) * 2);
+				int rh = (int)((bi[2]+pad) * 2);
+				
+				if(rx < 0) {
+					rx = 0;
+				}
+				else if(rx > cameraWidth) {
+					rx = cameraWidth;
+				}
+				
+				if(ry < 0) {
+					ry = 0;
+				}
+				else if(ry > cameraHeight) {
+					ry = cameraHeight;
+				}
+				
+				if((rw + rx) > cameraWidth) {
+					rw = cameraWidth - rx;
+				}
+				
+				if((rh + ry) > cameraHeight) {
+					rh = cameraHeight - ry;
+				}
+				
+				Rect rec = new Rect(rx, ry, rw, rh);
+				image4 = new Mat(image, rec);
+			    panel4.setimagewithMat(image4);
+			    frame4.repaint();
+			}
+			else {
+				image4 = new Mat();
+			}
 			for(int i = 0; i < circles.cols(); i++) {
 				double vCircle[] = circles.get(0, i);
 				int rCircle = (int)Math.round(vCircle[2]);
@@ -136,15 +143,13 @@ public class DetectBallDemo {
 		    frame2.repaint();
 		    panel3.setimagewithMat(image3);
 		    frame3.repaint();
-//		    panel4.setimagewithMat(image4);
-//		    frame4.repaint();
 		}
         
 	    //Successful update from desktop!
-//		capture.release();
+		capture.release();
 	    System.out.println(bi[0] + "/" + bi[1] + "/" + bi[2]);
 	    System.out.println("Success");
-//	    System.exit(0);
+	    System.exit(0);
 	}
 
 }
