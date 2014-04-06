@@ -57,8 +57,8 @@ public class DetectBallDemo {
 		int cameraHeight = image.height();
         
 		while(Frame.isOpen) {	
-			Scalar hsv_min = new Scalar(0 + Frame.aColor, 100, 50, 0);
-			Scalar hsv_max = new Scalar(10 + Frame.aColor, 255, 255, 0);
+			Scalar hsv_min = new Scalar(Frame.aColor, 100, 50, 0);
+			Scalar hsv_max = new Scalar(Frame.aColorW, 255, 255, 0);
 			capture.read(image);
 			Imgproc.GaussianBlur(image, image, new Size(19,19), 300.0);
 			Imgproc.cvtColor(image, image2, Imgproc.COLOR_BGR2HSV);
@@ -123,8 +123,12 @@ public class DetectBallDemo {
 			    frame4.repaint();
 			}
 			else {
+				bi[0] = -1.0;
+				bi[1] = -1.0;
+				bi[2] = -1.0;
 				image4 = new Mat();
 			}
+			Frame.ballPos.setText("x=" + DetectBallDemo.bi[0] + " y=" + DetectBallDemo.bi[1]);
 			for(int i = 0; i < circles.cols(); i++) {
 				double vCircle[] = circles.get(0, i);
 				int rCircle = (int)Math.round(vCircle[2]);
