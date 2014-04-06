@@ -48,8 +48,6 @@ public class DetectBallDemo {
 		S: 0 - 255
 		V: 0 - 255
 		*/
-		Scalar hsv_min = new Scalar(0, 60, 60, 0);
-		Scalar hsv_max = new Scalar(10, 255, 255, 0);
 
         Mat erode = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3,3));
         Mat dilate = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(5,5));
@@ -59,6 +57,8 @@ public class DetectBallDemo {
 		int cameraHeight = image.height();
         
 		while(Frame.isOpen) {	
+			Scalar hsv_min = new Scalar(0 + Frame.aColor, 100, 50, 0);
+			Scalar hsv_max = new Scalar(10 + Frame.aColor, 255, 255, 0);
 			capture.read(image);
 			Imgproc.GaussianBlur(image, image, new Size(19,19), 300.0);
 			Imgproc.cvtColor(image, image2, Imgproc.COLOR_BGR2HSV);
@@ -83,7 +83,7 @@ public class DetectBallDemo {
 	        	//Minimum Radius of circle (20)
 	        	//Maximum Radius of circle (100)
 	        Mat circles = new Mat();
-			Imgproc.HoughCircles(image3, circles, Imgproc.CV_HOUGH_GRADIENT, 2, 500, 10, 10, 20, 100);
+			Imgproc.HoughCircles(image3, circles, Imgproc.CV_HOUGH_GRADIENT, 2, 500, 40, 40, 20, 100);
 			if(circles.cols() > 0) 
 			{
 				bi[0] = circles.get(0, 0)[0];
