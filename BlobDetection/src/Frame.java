@@ -71,8 +71,8 @@ public class Frame extends JFrame{
 			ballPosy = new JLabel("y=" + DetectBallDemo.bi[1]);
 			buttonContainer.add(ballPosx);
 			buttonContainer.add(ballPosy);
-			buttonContainer.add(new JPanel());
-			buttonContainer.add(new JPanel());
+			buttonContainer.add(new JLabel("Hue Range: "));
+			buttonContainer.add(new JLabel("0 - 180"));
 			setLayout(new BorderLayout());
 			add(buttonContainer, BorderLayout.SOUTH);
 

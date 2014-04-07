@@ -59,17 +59,26 @@ public class DetectBallDemo {
 		int cameraHeight = oriImg.height();
         
 		while(Frame.isOpen) {	
+			capture.read(oriImg);
 			Scalar hsv_min = new Scalar(Frame.aColor, 70, 50, 0);
 			Scalar hsv_max = new Scalar(Frame.aColorW, 255, 255, 0);
-			capture.read(oriImg);
 			Imgproc.GaussianBlur(oriImg, oriImg, new Size(11,11), 30.0);
 			Imgproc.cvtColor(oriImg, hsvImg, Imgproc.COLOR_BGR2HSV);
 
-			Core.inRange(hsvImg, hsv_min, hsv_max, redGsImg);
-			Imgproc.erode(redGsImg, redGsImg, erode);
+			if(Frame.aColor < 0) {
+				Scalar hsv_min2 = new Scalar(Frame.aColor + 180, 70, 50, 0);
+				Scalar hsv_max2 = new Scalar(Frame.aColorW + 180, 255, 255, 0);
+				Mat tempImg = new Mat();
+				hsvImg.copyTo(tempImg);
+				Core.inRange(hsvImg, hsv_min, hsv_max, redGsImg);
+				Core.inRange(hsvImg, hsv_min2, hsv_max2, tempImg);
+				Core.bitwise_or(redGsImg, tempImg, redGsImg);
+			}
+			else{
+				Core.inRange(hsvImg, hsv_min, hsv_max, redGsImg);
+			}
 			Imgproc.erode(redGsImg, redGsImg, erode);
 			
-			Imgproc.dilate(redGsImg, redGsImg, dilate);
 			Imgproc.dilate(redGsImg, redGsImg, dilate);
 			
 	        //HoughCircles:
@@ -91,32 +100,24 @@ public class DetectBallDemo {
 				bi[0] = circles.get(0, 0)[0];
 				bi[1] = circles.get(0, 0)[1];
 				bi[2] = circles.get(0, 0)[2];
-				int pad = 10;
-				int rx = (int)(bi[0]-bi[2]-pad);
-				int ry = (int)(bi[1]-bi[2]-pad);
-				int rw = (int)((bi[2]+pad) * 2);
-				int rh = (int)((bi[2]+pad) * 2);
+				int pad = 50;
+				int rx = (int)(bi[0]-pad);
+				int ry = (int)(bi[1]-pad);
+				int rw = (int)((pad) * 2);
+				int rh = (int)((pad) * 2);
 				
 				if(rx < 0) {
 					rx = 0;
 				}
-				else if(rx > cameraWidth) {
-					rx = cameraWidth;
+				else if((rw + rx) > cameraWidth) {
+					rx = cameraWidth - rw;
 				}
 				
 				if(ry < 0) {
 					ry = 0;
 				}
-				else if(ry > cameraHeight) {
-					ry = cameraHeight;
-				}
-				
-				if((rw + rx) > cameraWidth) {
-					rw = cameraWidth - rx;
-				}
-				
-				if((rh + ry) > cameraHeight) {
-					rh = cameraHeight - ry;
+				else if((rh + ry) > cameraHeight) {
+					ry = cameraHeight - rh;
 				}
 				
 				Rect rec = new Rect(rx, ry, rw, rh);
@@ -139,7 +140,6 @@ public class DetectBallDemo {
 				Point pt = new Point();
 				pt.x = Math.round(vCircle[0]);
 				pt.y = Math.round(vCircle[1]);
-				
 				
 				Core.circle(oriImg, pt, rCircle, new Scalar(0,255,0), 2);
 			}
