@@ -21,7 +21,7 @@ public class DetectBallDemo {
 	public static double[] bi = new double[3];
 
 	public void run() {  
-		VideoCapture capture = new VideoCapture(0);
+		VideoCapture capture = new VideoCapture(1);
 		capture.set(3, sizex - 100);
 		capture.set(4, sizey - 100);
 	    
